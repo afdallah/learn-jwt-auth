@@ -4,20 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon run dev",
-    "test": "mocha"
+    "dev": "nodemon bin/www",
+    "test": "NODE_ENV=test mocha test/* --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chai-http": "^4.3.0",
+    "chai-things": "^0.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "faker": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.10"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-like": "^1.1.1",
     "mocha": "^7.0.1",
     "nodemon": "^2.0.2",
     "supertest": "^4.0.2"

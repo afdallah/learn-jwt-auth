@@ -1,17 +1,33 @@
-const Book = require('../models/books');
+const Book = require('../models/book');
 
 exports.getAll = async (req, res) => {
-  const books = await Book.find();
-  res.send(books);
+  try {
+    const books = await Book.find();
+    res.status(200).send({
+      status: true,
+      data: books
+    });
+  } catch(err) {
+    res.status(400).json({
+      status: false,
+      erros: err
+    })
+  }
 }
 
 exports.create = async (req, res) => {
   try {
     const book = await Book.create(req.body);
 
-    res.send(book);
+    res.status(201).json({
+      status: true,
+      data: book
+    });
   } catch(err) {
-    res.sendStatus(400);
+    res.status(400).json({
+      status: false,
+      errors: err
+    });
   }
 }
 
@@ -19,10 +35,14 @@ exports.update = async (req, res) => {
   try {
     const book = await Book.findOneAndUpdate(
       { ISBN: req.body.ISBN },
-      { $set: req.body }
+      { $set: req.body },
+      { new: true }
     )
 
-    res.send(book);
+    res.status(200).json({
+      status: true,
+      data: book
+    });
   } catch(err) {
     res.status(400).json({
       status: false,
