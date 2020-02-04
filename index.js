@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 const env = process.env.NODE_ENV || 'development';
@@ -26,6 +27,8 @@ mongoose.connect(dbConnection[env], {
 
 // middleware
 app.use(express.json());
+app.use(express.static('public'))
+app.use(cors());
 
 // Routes
 app.get('/', function(req, res) {

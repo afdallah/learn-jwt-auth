@@ -24,16 +24,18 @@ const userSchema = new Schema({
 const User = mongoose.model('User', userSchema);
 
 User.authenticate = function (data) {
-  return new Promise(async (resolve, reject) => {
-    const user = await User.findOne({ email: data.email })
-    if (!user) return reject('No user found');
+  return new Promise((resolve, reject) => {
+    User.findOne({ email: data.email })
+      .then(user => {
+        if (!user) return reject('No user found');
 
-    const validPassword = await bcrypt.compare(data.password, user.password)
-    if (!validPassword) return reject('User or password is incorrect');
+        const validPassword = bcrypt.compareSync(data.password, user.password)
+        if (!validPassword) return reject('User or password is incorrect');
 
-    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY);
+        const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY);
 
-    resolve(token)
+        resolve(token)
+      })
   })
 }
 

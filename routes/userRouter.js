@@ -6,9 +6,6 @@ const isAuthenticated = require('../middleware/auth');
 // controllers
 const user = require('../controllers/userController');
 
-// models
-const User = require('../models/user');
-
 // register
 router.post('/', user.create);
 router.post('/register', user.create);
